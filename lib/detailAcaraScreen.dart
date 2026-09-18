@@ -1,6 +1,3 @@
-// ============================================================================
-// 3. HALAMAN DETAIL (PENERIMA DATA & NAVIGATOR.POP)
-// ============================================================================
 import 'package:flutter/material.dart';
 
 class DetailAcaraScreen extends StatelessWidget {
