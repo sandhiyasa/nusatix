@@ -1,6 +1,6 @@
 
 
-<!-- ===================Lampiran 1 =================--> 
+<!-- ===================Pertemuan 2=================--> 
 <!-- 
 import 'package:flutter/material.dart';
 
@@ -140,11 +140,11 @@ class BerandaAplikasi extends StatelessWidget {
     );
   }
 }
-<!-- =================== End Lampiran 1 =================--> 
+<!-- =================== End pertemuan 2 =================--> 
  
 
 
-<!-- =================== Lampiran 2 =================--> 
+<!-- =================== Pertemuan 3 =================--> 
  <!-- 
  import 'package:flutter/material.dart';
 
@@ -409,9 +409,9 @@ class BerandaAplikasi extends StatelessWidget {
 }
 
   -->
-  <!-- =================== end Lampiran 2 =================--> 
+  <!-- =================== end Pertemuan 2 =================--> 
 
-  <!-- =================== Lampiran 3 =================--> 
+  <!-- =================== Pertemuan 3 =================--> 
   <!--
 import 'package:flutter/material.dart';
 
@@ -735,10 +735,10 @@ class BerandaAplikasi extends StatelessWidget {
 }
 
   -->
-  <!-- =================== end Lampiran 3 =================--> 
+  <!-- =================== end Pertemuan 3 =================--> 
 
 
-  <!-- =================== Mulai Lampiran 4 ===================
+  <!-- =================== Pertemuan 4 ===================
   import 'package:flutter/material.dart';
 
 void main() {
