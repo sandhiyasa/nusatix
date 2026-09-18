@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'detailAcaraScreen.dart';
-import 'bookmarkState.dart';
-import 'ProfilScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+      // MENGUBAH HOME KE MAINSCREEN (UNTUK BOTTOM NAVIGATION BAR)
       home: const MainScreen(),
     );
   }
@@ -35,26 +34,23 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  // Inisialisasi State Manager untuk diteruskan ke halaman anak (Beranda & Profil)
-  final BookmarkState _bookmarkState = BookmarkState();
+  // Daftar halaman yang akan ditampilkan berdasarkan tab yang aktif
+  final List<Widget> _halaman = [
+    const BerandaAplikasi(),
+    const Center(
+      child: Text('Halaman Tiket Saya', style: TextStyle(fontSize: 20)),
+    ),
+    const Center(child: Text('Halaman Profil', style: TextStyle(fontSize: 20))),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _selectedIndex = index; // Mengubah state indeks navigasi
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // Daftar halaman yang menerima injeksi _bookmarkState
-    final List<Widget> _halaman = [
-      BerandaAplikasi(bookmarkState: _bookmarkState),
-      const Center(
-        child: Text('Halaman Tiket Saya', style: TextStyle(fontSize: 20)),
-      ),
-      ProfilScreen(bookmarkState: _bookmarkState),
-    ];
-
     return Scaffold(
       body: _halaman[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -75,13 +71,10 @@ class _MainScreenState extends State<MainScreen> {
 }
 
 // ============================================================================
-// 2. BERANDA APLIKASI (MENGUBAH & MENDENGARKAN STATE)
+// 2. BERANDA APLIKASI (SUMBER DATA)
 // ============================================================================
 class BerandaAplikasi extends StatelessWidget {
-  // Variabel untuk menerima state yang dilempar dari MainScreen
-  final BookmarkState bookmarkState;
-
-  const BerandaAplikasi({super.key, required this.bookmarkState});
+  const BerandaAplikasi({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +87,6 @@ class BerandaAplikasi extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // --- HEADER HERO IMAGE ---
             Stack(
               children: [
                 Container(
@@ -170,7 +162,7 @@ class BerandaAplikasi extends StatelessWidget {
               ),
             ),
 
-            // --- CARD 1: DENPASAR FESTIVAL ---
+            // Card 1: Denpasar Festival
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 16.0,
@@ -201,29 +193,23 @@ class BerandaAplikasi extends StatelessWidget {
                               ),
                             ),
                           ),
-                          // IMPLEMENTASI STATE MANAGEMENT: ListenableBuilder merender ulang ikon
-                          ListenableBuilder(
-                            listenable: bookmarkState,
-                            builder: (context, child) {
-                              bool isSaved = bookmarkState.isBookmarked(
-                                'Denpasar Festival (Denfest)',
-                              );
-                              return IconButton(
-                                icon: Icon(
-                                  isSaved
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_border,
-                                  color: isSaved
-                                      ? Colors.orange.shade800
-                                      : Colors.grey,
-                                ),
-                                onPressed: () {
-                                  bookmarkState.toggleBookmark(
-                                    'Denpasar Festival (Denfest)',
-                                  );
-                                },
-                              );
-                            },
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.orange.shade100,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              'Festival',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orange.shade800,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -259,7 +245,7 @@ class BerandaAplikasi extends StatelessWidget {
                       const SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,
-                        height: 48,
+                        height: 48, // Accessible Tappable Area (>= 48dp)
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -307,7 +293,7 @@ class BerandaAplikasi extends StatelessWidget {
               ),
             ),
 
-            // --- CARD 2: PESTA KESENIAN BALI ---
+            // Card 2: Bali
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 16.0,
@@ -338,29 +324,23 @@ class BerandaAplikasi extends StatelessWidget {
                               ),
                             ),
                           ),
-                          // IMPLEMENTASI STATE MANAGEMENT: ListenableBuilder merender ulang ikon
-                          ListenableBuilder(
-                            listenable: bookmarkState,
-                            builder: (context, child) {
-                              bool isSaved = bookmarkState.isBookmarked(
-                                'Pesta Kesenian Bali (PKB)',
-                              );
-                              return IconButton(
-                                icon: Icon(
-                                  isSaved
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_border,
-                                  color: isSaved
-                                      ? Colors.teal.shade800
-                                      : Colors.grey,
-                                ),
-                                onPressed: () {
-                                  bookmarkState.toggleBookmark(
-                                    'Pesta Kesenian Bali (PKB)',
-                                  );
-                                },
-                              );
-                            },
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.teal.shade100,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              'Seni',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.teal.shade800,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -398,6 +378,7 @@ class BerandaAplikasi extends StatelessWidget {
                         width: double.infinity,
                         height: 48,
                         child: ElevatedButton(
+                          // MODIFIKASI: Implementasi Navigator.push dan Passing Data
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -443,6 +424,7 @@ class BerandaAplikasi extends StatelessWidget {
                 ),
               ),
             ),
+            // (Card Destinasi Horisontal dapat dibiarkan seperti sebelumnya untuk menghemat baris kode)
           ],
         ),
       ),
