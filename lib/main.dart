@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'detailAcaraScreen.dart';
-import 'bookmarkState.dart';
-import 'ProfilScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,71 +14,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MainScreen(),
+      home: const BerandaAplikasi(),
     );
   }
 }
 
-// ============================================================================
-// 1. MAIN SCREEN DENGAN BOTTOM NAVIGATION BAR
-// ============================================================================
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
-
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
-
-  // Inisialisasi State Manager untuk diteruskan ke halaman anak (Beranda & Profil)
-  final BookmarkState _bookmarkState = BookmarkState();
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // Daftar halaman yang menerima injeksi _bookmarkState
-    final List<Widget> _halaman = [
-      BerandaAplikasi(bookmarkState: _bookmarkState),
-      const Center(
-        child: Text('Halaman Tiket Saya', style: TextStyle(fontSize: 20)),
-      ),
-      ProfilScreen(bookmarkState: _bookmarkState),
-    ];
-
-    return Scaffold(
-      body: _halaman[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.deepPurple,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Beranda'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.confirmation_num),
-            label: 'Tiket Saya',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
-        ],
-      ),
-    );
-  }
-}
-
-// ============================================================================
-// 2. BERANDA APLIKASI (MENGUBAH & MENDENGARKAN STATE)
-// ============================================================================
 class BerandaAplikasi extends StatelessWidget {
-  // Variabel untuk menerima state yang dilempar dari MainScreen
-  final BookmarkState bookmarkState;
-
-  const BerandaAplikasi({super.key, required this.bookmarkState});
+  const BerandaAplikasi({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -94,16 +33,17 @@ class BerandaAplikasi extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // --- HEADER HERO IMAGE ---
             Stack(
               children: [
                 Container(
                   height: 220,
                   width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
-                    image: DecorationImage(
-                      image: AssetImage('assets/image/jatiluwih.jpg'),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    image: const DecorationImage(
+                      image: NetworkImage(
+                        'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=1200&q=80',
+                      ),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -152,295 +92,224 @@ class BerandaAplikasi extends StatelessWidget {
                 ),
               ],
             ),
-
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.orange.shade100,
+                  borderRadius: BorderRadius.circular(12.0),
+                  border: Border.all(color: Colors.orange.shade300),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Festival Budaya Lembah Baliem',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange.shade900,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Lokasi: Wamena, Papua Pegunungan',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Festival adat tertua di Papua yang menampilkan simulasi perang antarsuku serta tarian tradisional.',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.teal.shade100,
+                  borderRadius: BorderRadius.circular(12.0),
+                  border: Border.all(color: Colors.teal.shade300),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Pesta Kesenian Bali (PKB)',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.teal.shade900,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Lokasi: Denpasar, Bali',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Pawai seni budaya tahunan yang menampilkan parade seni, lomba, seminar, dan pameran kerajinan khas Bali.',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade100,
+                  borderRadius: BorderRadius.circular(12.0),
+                  border: Border.all(color: Colors.red.shade300),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Festival Nasional Reog Ponorogo',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red.shade900,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Lokasi: Ponorogo, Jawa Timur',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Pertunjukan tari topeng raksasa terbesar di Indonesia dengan iringan musik gamelan yang magis.',
+                    ),
+                  ],
+                ),
+              ),
+            ),
             const Padding(
-              padding: EdgeInsets.only(
-                left: 16.0,
-                top: 20.0,
-                right: 16.0,
-                bottom: 8.0,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
               child: Text(
-                'Acara Kebudayaan Terdekat',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
+                'Destinasi Wisata Populer',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-
-            // --- CARD 1: DENPASAR FESTIVAL ---
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8.0,
-              ),
-              child: Card(
-                elevation: 3,
-                shadowColor: Colors.orange.withOpacity(0.2),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 12.0,
+                      right: 6.0,
+                      bottom: 12.0,
+                    ),
+                    child: Container(
+                      width: 200,
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade100,
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(color: Colors.blue.shade300),
+                      ),
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Text(
-                              'Denpasar Festival (Denfest)',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange.shade900,
-                              ),
+                          Text(
+                            'Raja Ampat',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
                             ),
                           ),
-                          // IMPLEMENTASI STATE MANAGEMENT: ListenableBuilder merender ulang ikon
-                          ListenableBuilder(
-                            listenable: bookmarkState,
-                            builder: (context, child) {
-                              bool isSaved = bookmarkState.isBookmarked(
-                                'Denpasar Festival (Denfest)',
-                              );
-                              return IconButton(
-                                icon: Icon(
-                                  isSaved
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_border,
-                                  color: isSaved
-                                      ? Colors.orange.shade800
-                                      : Colors.grey,
-                                ),
-                                onPressed: () {
-                                  bookmarkState.toggleBookmark(
-                                    'Denpasar Festival (Denfest)',
-                                  );
-                                },
-                              );
-                            },
+                          SizedBox(height: 8),
+                          Text('Papua Barat'),
+                          SizedBox(height: 4),
+                          Text(
+                            'Surga bawah laut terindah di dunia dengan gugusan pulau karang.',
+                            style: TextStyle(fontSize: 12),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on_rounded,
-                            size: 16,
-                            color: Colors.orange.shade700,
-                          ),
-                          const SizedBox(width: 6),
-                          const Expanded(
-                            child: Text(
-                              'Kawasan Catur Muka, Denpasar',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Eksibisi seni, budaya, dan kuliner tahunan yang merayakan kreativitas masyarakat urban di jantung kota.',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          height: 1.4,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const DetailAcaraScreen(
-                                  namaAcara: 'Denpasar Festival (Denfest)',
-                                  lokasi: 'Kawasan Catur Muka, Denpasar',
-                                  deskripsi:
-                                      'Eksibisi seni, budaya, dan kuliner tahunan yang merayakan kreativitas masyarakat urban di jantung kota.',
-                                ),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange.shade800,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.confirmation_number_outlined,
-                                size: 18,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                'Pesan Tiket',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
-
-            // --- CARD 2: PESTA KESENIAN BALI ---
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8.0,
-              ),
-              child: Card(
-                elevation: 3,
-                shadowColor: Colors.teal.withOpacity(0.2),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6.0,
+                      vertical: 12.0,
+                    ),
+                    child: Container(
+                      width: 200,
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade100,
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(color: Colors.green.shade300),
+                      ),
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Text(
-                              'Pesta Kesenian Bali (PKB)',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.teal.shade900,
-                              ),
+                          Text(
+                            'Candi Borobudur',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
                             ),
                           ),
-                          // IMPLEMENTASI STATE MANAGEMENT: ListenableBuilder merender ulang ikon
-                          ListenableBuilder(
-                            listenable: bookmarkState,
-                            builder: (context, child) {
-                              bool isSaved = bookmarkState.isBookmarked(
-                                'Pesta Kesenian Bali (PKB)',
-                              );
-                              return IconButton(
-                                icon: Icon(
-                                  isSaved
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_border,
-                                  color: isSaved
-                                      ? Colors.teal.shade800
-                                      : Colors.grey,
-                                ),
-                                onPressed: () {
-                                  bookmarkState.toggleBookmark(
-                                    'Pesta Kesenian Bali (PKB)',
-                                  );
-                                },
-                              );
-                            },
+                          SizedBox(height: 8),
+                          Text('Jawa Tengah'),
+                          SizedBox(height: 4),
+                          Text(
+                            'Candi Buddha terbesar di dunia dan salah satu warisan budaya UNESCO.',
+                            style: TextStyle(fontSize: 12),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on_rounded,
-                            size: 16,
-                            color: Colors.teal.shade700,
-                          ),
-                          const SizedBox(width: 6),
-                          const Expanded(
-                            child: Text(
-                              'Denpasar, Bali',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Pawai seni budaya tahunan yang menampilkan parade seni, lomba, seminar, dan pameran kerajinan khas Bali.',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          height: 1.4,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const DetailAcaraScreen(
-                                  namaAcara: 'Pesta Kesenian Bali (PKB)',
-                                  lokasi: 'Denpasar, Bali',
-                                  deskripsi:
-                                      'Pawai seni budaya tahunan yang menampilkan parade seni, lomba, seminar, dan pameran kerajinan khas Bali.',
-                                ),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal.shade800,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.confirmation_number_outlined,
-                                size: 18,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                'Pesan Tiket',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 6.0,
+                      right: 12.0,
+                      bottom: 12.0,
+                    ),
+                    child: Container(
+                      width: 200,
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.purple.shade100,
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(color: Colors.purple.shade300),
+                      ),
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Taman Nasional Komodo',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text('Nusa Tenggara Timur'),
+                          SizedBox(height: 4),
+                          Text(
+                            'Habitat asli kadal raksasa purba Komodo yang menakjubkan.',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
