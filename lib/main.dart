@@ -35,21 +35,32 @@ class MenuPage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
               },
               child: const Text('Halaman Login'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RegisterPage()),
+                );
               },
               child: const Text('Halaman Register'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const FormPemesananPage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FormPemesananScreen(),
+                  ),
+                );
               },
               child: const Text('Form Pemesanan Tiket'),
             ),
