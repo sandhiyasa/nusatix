@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import 'api_service.dart';
 
 class WisataPage extends StatefulWidget {
@@ -18,7 +19,26 @@ class _WisataPageState extends State<WisataPage> {
   void initState() {
     super.initState();
     // Panggil GET Request saat inisialisasi
-    _wisataListFuture = _apiService.fetchWisata();
+    _wisataListFuture = _tarikDataDenganCache();
+  }
+
+  Future<List<dynamic>> _tarikDataDenganCache() async {
+    final prefs = await SharedPreferences.getInstance();
+    try {
+      // Mencoba menarik data langsung dari Server (Online)
+      final dataOnline = await _apiService.fetchWisata();
+      
+      // Jika sukses, simpan (encode) data tersebut ke memori lokal
+      prefs.setString('cache_berita', jsonEncode(dataOnline));
+      return dataOnline;
+    } catch (e) {
+      // Jika koneksi gagal, cari data cadangan di memori lokal (Offline)
+      final cacheString = prefs.getString('cache_berita');
+      if (cacheString != null) {
+        return jsonDecode(cacheString); // Decode kembali ke List
+      }
+      throw Exception('Tidak ada koneksi internet & cache kosong.');
+    }
   }
 
   Future<void> _showAddWisataDialog() async {
@@ -76,7 +96,7 @@ class _WisataPageState extends State<WisataPage> {
                           'body': result['body'],
                         });
                         // Tetap refresh data API jika diperlukan
-                        _wisataListFuture = _apiService.fetchWisata();
+                        _wisataListFuture = _tarikDataDenganCache();
                       });
                       
                       ScaffoldMessenger.of(context).showSnackBar(
