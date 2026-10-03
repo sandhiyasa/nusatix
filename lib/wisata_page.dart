@@ -12,6 +12,7 @@ class WisataPage extends StatefulWidget {
 class _WisataPageState extends State<WisataPage> {
   final ApiService _apiService = ApiService();
   late Future<List<dynamic>> _wisataListFuture;
+  final List<dynamic> _addedItems = [];
 
   @override
   void initState() {
@@ -70,6 +71,11 @@ class _WisataPageState extends State<WisataPage> {
                       Navigator.pop(context);
                       
                       setState(() {
+                        _addedItems.insert(0, {
+                          'title': result['title'],
+                          'body': result['body'],
+                        });
+                        // Tetap refresh data API jika diperlukan
                         _wisataListFuture = _apiService.fetchWisata();
                       });
                       
@@ -112,8 +118,10 @@ class _WisataPageState extends State<WisataPage> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Tidak ada data'));
           } else {
-            // Ambil 10 data pertama saja agar tidak terlalu panjang
-            final dataList = snapshot.data!.take(10).toList();
+            // Gabungkan data yang baru ditambahkan lokal dengan data dari API
+            final apiDataList = snapshot.data!.take(10).toList();
+            final dataList = [..._addedItems, ...apiDataList];
+            
             return ListView.builder(
               itemCount: dataList.length,
               itemBuilder: (context, index) {
