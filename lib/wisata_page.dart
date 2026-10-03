@@ -68,6 +68,11 @@ class _WisataPageState extends State<WisataPage> {
                       await prefs.remove('draft_deskripsi');
 
                       Navigator.pop(context);
+                      
+                      setState(() {
+                        _wisataListFuture = _apiService.fetchWisata();
+                      });
+                      
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
