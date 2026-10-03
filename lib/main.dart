@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'register_page.dart';
 import 'form_pemesanan_page.dart';
+import 'wisata_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,6 +64,18 @@ class MenuPage extends StatelessWidget {
                 );
               },
               child: const Text('Form Pemesanan Tiket'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WisataPage(),
+                  ),
+                );
+              },
+              child: const Text('Daftar Acara & Wisata (API)'),
             ),
           ],
         ),
