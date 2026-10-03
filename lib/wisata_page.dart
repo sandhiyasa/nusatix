@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'api_service.dart';
 
 class WisataPage extends StatefulWidget {
@@ -19,9 +20,12 @@ class _WisataPageState extends State<WisataPage> {
     _wisataListFuture = _apiService.fetchWisata();
   }
 
-  void _showAddWisataDialog() {
-    final TextEditingController _namaController = TextEditingController();
-    final TextEditingController _deskripsiController = TextEditingController();
+  Future<void> _showAddWisataDialog() async {
+    final prefs = await SharedPreferences.getInstance();
+    final TextEditingController _namaController = TextEditingController(text: prefs.getString('draft_nama') ?? '');
+    final TextEditingController _deskripsiController = TextEditingController(text: prefs.getString('draft_deskripsi') ?? '');
+
+    if (!mounted) return;
 
     showDialog(
       context: context,
@@ -34,10 +38,12 @@ class _WisataPageState extends State<WisataPage> {
               TextField(
                 controller: _namaController,
                 decoration: const InputDecoration(labelText: 'Judul'),
+                onChanged: (value) => prefs.setString('draft_nama', value),
               ),
               TextField(
                 controller: _deskripsiController,
                 decoration: const InputDecoration(labelText: 'Deskripsi'),
+                onChanged: (value) => prefs.setString('draft_deskripsi', value),
               ),
             ],
           ),
@@ -58,6 +64,9 @@ class _WisataPageState extends State<WisataPage> {
                     );
 
                     if (mounted) {
+                      await prefs.remove('draft_nama');
+                      await prefs.remove('draft_deskripsi');
+
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
